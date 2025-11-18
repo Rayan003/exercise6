@@ -82,3 +82,181 @@ actual4 = and_func(
     )
 )
 print(f"4: {expected4} vs {actual4}")
+
+
+// C# imlpementation
+
+using System;
+
+class Program
+{
+    static int Add(int x, int y)          => x + y;
+    static int Subtract(int x, int y)     => x - y;
+    static int Multiply(int x, int y)     => x * y;
+    static int Divide(int x, int y)       => x / y;
+    static int Mod(int x, int y)          => x % y;
+
+    static bool AndFunc(bool x, bool y)   => x && y;
+    static bool OrFunc(bool x, bool y)    => x || y;
+    static bool NotFunc(bool x)           => !x;
+
+    static bool GreaterThan(int x, int y) => x > y;
+    static bool LessEqual(int x, int y)   => x <= y;
+    static bool Equal(int x, int y)       => x == y;
+
+    static void Main()
+    {
+        int a = 5, b = 3, c = 7, d = 4, e = 2, f = 10;
+        bool x = true, y = false, z = true, isAdmin = false;
+
+        // 1) Worked Example
+        bool expected1 = (a + b * c) > (d - e) && x || y;
+        bool actual1 =
+            OrFunc(
+                AndFunc(
+                    GreaterThan(
+                        Add(a, Multiply(b, c)),
+                        Subtract(d, e)
+                    ),
+                    x
+                ),
+                y
+            );
+        Console.WriteLine($"1: {expected1} vs {actual1}");
+
+
+        // 2) Expression: (a - b) * (c + d) <= e && z && !x
+        bool expected2 = (a - b) * (c + d) <= e && z && !x;
+        bool actual2 = AndFunc(
+            AndFunc(
+                LessEqual(
+                    Multiply(
+                        Subtract(a, b),
+                        Add(c, d)
+                    ),
+                    e
+                ),
+                z
+            ),
+            NotFunc(x)
+        );
+        Console.WriteLine($"2: {expected2} vs {actual2}");
+
+        // 3) Expression: (a + b + c) % d == 0 || (f > e && isAdmin)
+        bool expected3 = (a + b + c) % d == 0 || (f > e && isAdmin);
+        bool actual3 = OrFunc(
+            Equal(
+                Mod(
+                    Add(Add(a, b), c),
+                    d
+                ),
+                0
+            ),
+            AndFunc(
+                GreaterThan(f, e),
+                isAdmin
+            )
+        );
+        Console.WriteLine($"3: {expected3} vs {actual3}");
+
+        // 4) Expression: !(x || y) && (a * a > b * c)
+        bool expected4 = !(x || y) && (a * a > b * c);
+        bool actual4 = AndFunc(
+            NotFunc(
+                OrFunc(x, y)
+            ),
+            GreaterThan(
+                Multiply(a, a),
+                Multiply(b, c)
+            )
+        );
+        Console.WriteLine($"4: {expected4} vs {actual4}");
+    }
+}
+
+
+// TypeScript Implementation
+
+function add(x: number, y: number): number          { return x + y; }
+function subtract(x: number, y: number): number     { return x - y; }
+function multiply(x: number, y: number): number     { return x * y; }
+function divide(x: number, y: number): number       { return Math.trunc(x / y); }
+function mod(x: number, y: number): number          { return x % y; }
+
+function andFunc(x: boolean, y: boolean): boolean   { return x && y; }
+function orFunc(x: boolean, y: boolean): boolean    { return x || y; }
+function notFunc(x: boolean): boolean               { return !x; }
+
+function greaterThan(x: number, y: number): boolean { return x > y; }
+function lessEqual(x: number, y: number): boolean   { return x <= y; }
+function equal(x: number, y: number): boolean       { return x === y; }
+
+
+const a = 5, b = 3, c = 7, d = 4, e = 2, f = 10;
+const x = true, y = false, z = true, isAdmin = false;
+
+
+// 1) Worked Example
+const expected1 = (a + b * c) > (d - e) && x || y;
+
+const actual1 = orFunc(
+    andFunc(
+        greaterThan(
+            add(a, multiply(b, c)),
+            subtract(d, e)
+        ),
+        x
+    ),
+    y
+);
+console.log("1:", expected1, actual1);
+
+
+// 2) Expression: (a - b) * (c + d) <= e && z && !x
+const expected2 = (a - b) * (c + d) <= e && z && !x;
+const actual2 = andFunc(
+    andFunc(
+        lessEqual(
+            multiply(
+                subtract(a, b),
+                add(c, d)
+            ),
+            e
+        ),
+        z
+    ),
+    notFunc(x)
+);
+console.log("2:", expected2, actual2);
+
+
+// 3) Expression: (a + b + c) % d == 0 || (f > e && isAdmin)
+const expected3 = (a + b + c) % d == 0 || (f > e && isAdmin);
+const actual3 = orFunc(
+    equal(
+        mod(
+            add(add(a, b), c),
+            d
+        ),
+        0
+    ),
+    andFunc(
+        greaterThan(f, e),
+        isAdmin
+    )
+);
+console.log("3:", expected3, actual3);
+
+
+// 4) Expression: !(x || y) && (a * a > b * c)
+const expected4 = !(x || y) && (a * a > b * c);
+const actual4 = andFunc(
+    notFunc(
+        orFunc(x, y)
+    ),
+    greaterThan(
+        multiply(a, a),
+        multiply(b, c)
+    )
+);
+console.log("4:", expected4, actual4);
